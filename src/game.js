@@ -7,6 +7,9 @@ window.Game = {
     this._stage = new createjs.Stage(canvas);
     // Set up the current screen.
     this._screen = null;
+    // Set up the window event listeners
+    document.onkeydown = this.handleKeyDown.bind(this);
+    document.onkeyup = this.handleKeyUp.bind(this);
     // Reset the game state.
     this.reset();
   },
@@ -32,6 +35,30 @@ window.Game = {
   tick: function(event) {
     this._screen.tick(event, this._stage);
     this._stage.update();
+  },
+  /**
+   * This function is called every time a key is pressed. The event
+   * is then proxied to the screen.
+   * @param  {?} event The keydown event.
+   */
+  handleKeyDown: function(event) {
+    // For cross-browser support
+    if (!event) {
+      event = window.event
+    }
+    this._screen.handleKeyDown(event);
+  },
+  /**
+   * This function is called every time a key is released. The event
+   * is then proxied to the screen.
+   * @param  {?} event The keyup event.
+   */
+  handleKeyUp: function(event) {
+    // For cross-browser support
+    if (!event) {
+      event = window.event
+    }
+    this._screen.handleKeyUp(event);
   },
   /**
    * Switches the current game screen.

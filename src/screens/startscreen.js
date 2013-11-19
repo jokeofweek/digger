@@ -4,6 +4,7 @@ function StartScreen() {
   // Call parent constructor.
   Game.Screen.call(this);
 };
+StartScreen.prototype = new Game.Screen();
 
 /**
  * @override
@@ -23,9 +24,9 @@ StartScreen.prototype.enter = function(stage) {
 /**
  * @override
  */
-StartScreen.prototype.tick = function(event, stage) {
+StartScreen.prototype.handleKeyDown = function(event) {
+  console.log(event);
 };
-
 Game.Screens.StartScreen = StartScreen;
 
 })(window.Game);
