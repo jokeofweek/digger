@@ -1,4 +1,7 @@
 (function(window) {
+
+var loader = null;
+
 window.Game = {
   init: function() {
     // Set up width and height.
@@ -10,8 +13,14 @@ window.Game = {
     // Set up the window event listeners
     document.onkeydown = this.handleKeyDown.bind(this);
     document.onkeyup = this.handleKeyUp.bind(this);
-    // Reset the game state.
-    this.reset();
+
+    // Load the assets before starting the game.
+    manifest = [
+      {src: 'assets/salmon.png', id: 'salmon'}
+    ];
+    loader = new createjs.LoadQueue(false);
+    loader.addEventListener('complete', this.reset.bind(this));
+    loader.loadManifest(manifest);
   },
   /**
    * This resets the game state to a new fresh game.
@@ -27,6 +36,9 @@ window.Game = {
     if (!createjs.Ticker.hasEventListener("tick")) { 
       createjs.Ticker.addEventListener("tick", this.tick.bind(this));
     }                
+  },
+  getLoader: function() {
+    return loader;
   },
   /**
    * This function is called every game tick.
