@@ -58,6 +58,13 @@ Entity.prototype.getY = function() {
 	return this.y - this.regY;
 };
 
+/**
+ * This method is called when the stage ticks.
+ * @param  {?} event The tick event.
+ */
+Entity.prototype.tick = function(event) {
+};
+
 Game.Entity = Entity;
 // Set up entities namespace.
 Game.Entities = {};

@@ -17,6 +17,14 @@ GameScreen.prototype.enter = function(stage) {
   stage.addChild(this._player);
 };
 
+/**
+ * @override
+ */
+GameScreen.prototype.tick = function(event, stage) {
+  this._player.tick(event);
+};
+
+
 Game.Screens.GameScreen = GameScreen;
 
 })(window.Game);

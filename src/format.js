@@ -41,7 +41,12 @@ String.format = function(template) {
 String.format.map = {
   "s": "toString",
   "key": function() {
-    // Used for returning the name of a key.
-    return this.name;
+    // If it's an array, we need to get all names.
+    if (this.length) {
+      return this.map(function(key){ return key.name; }).join('/')
+    } else {
+      // Used for returning the name of a single key.
+      return this.name;
+    }
   }
 }
