@@ -4,7 +4,7 @@ function StartScreen() {
   // Call parent constructor.
   Game.Screen.call(this);
 };
-StartScreen.prototype = new Game.Screen();
+StartScreen.extend(Game.Screen);
 
 /**
  * @override

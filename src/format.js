@@ -1,3 +1,6 @@
+// This function was pulled from rot.js
+// (http://ondras.github.io/rot.js/hp/)
+
 /**
  * Format a string in a flexible way. Scans for %s strings and replaces them with arguments. List of patterns is modifiable via String.format.map.
  * @param {string} template

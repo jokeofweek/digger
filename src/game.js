@@ -16,7 +16,8 @@ window.Game = {
 
     // Load the assets before starting the game.
     manifest = [
-      {src: 'assets/salmon.png', id: 'salmon'}
+      {src: 'assets/salmon.png', id: 'salmon'},
+      {src: 'assets/truck.png', id: 'truck'}
     ];
     loader = new createjs.LoadQueue(false);
     loader.addEventListener('complete', this.reset.bind(this));
@@ -35,6 +36,8 @@ window.Game = {
     // Start the game timer if not already started
     if (!createjs.Ticker.hasEventListener("tick")) { 
       createjs.Ticker.addEventListener("tick", this.tick.bind(this));
+      createjs.Ticker.setFPS(64);
+      createjs.Ticker.useRAF = true;
     }                
   },
   getLoader: function() {

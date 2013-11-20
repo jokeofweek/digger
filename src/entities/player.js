@@ -11,15 +11,16 @@ Player.prototype.initialize = function(imgPlayer, x, y) {
   // Load the sprite sheet.
   var sheet = new createjs.SpriteSheet({
     images: [imgPlayer],
-    frames: { width: 59, height: 37, regX: 0, regY: 0, count: 22},
+    frames: { width: 62, height: 38, regX: 0, regY: 0, count: 4},
     animations: {
-      idle: [0, 21, 'idle']
+      idle: {
+        frames: [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3],
+      }
     }
   });
 
   this.x = x;
   this.y = y;
-  this.framerate = 30;
   this.Sprite_initialize(sheet, 'idle');
 };
 
