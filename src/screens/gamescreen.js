@@ -12,9 +12,9 @@ GameScreen.extend(Game.Screen);
 GameScreen.prototype.enter = function(stage) {
   console.log('Entering game screen.');
 
-  // Create the salmon sprite sheet.
-  var player = new Game.Player(Game.getLoader().getResult('truck'), 20, 20);
-  stage.addChild(player);
+  // Create the player.
+  this._player = new Game.Entities.Player();
+  stage.addChild(this._player);
 };
 
 Game.Screens.GameScreen = GameScreen;

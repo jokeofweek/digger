@@ -1,17 +1,11 @@
 (function(Game) {
 
-function Player(imgPlayer, x, y) {
-  this.initialize(imgPlayer, x, y);
-}
-Player.prototype = new createjs.Sprite();
-
-Player.prototype.Sprite_initialize = Player.prototype.initialize; //unique to avoid overiding base class
-
-Player.prototype.initialize = function(imgPlayer, x, y) {
-  // Load the sprite sheet.
+function Player() {
+  var frameWidth = 62;
+  var frameHeight = 38;
   var sheet = new createjs.SpriteSheet({
-    images: [imgPlayer],
-    frames: { width: 62, height: 38, regX: 0, regY: 0, count: 4},
+    images: [Game.getLoader().getResult('truck')],
+    frames: { width: frameWidth, height: frameHeight, regX: 0, regY: 0, count: 4},
     animations: {
       idle: {
         frames: [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3],
@@ -19,14 +13,10 @@ Player.prototype.initialize = function(imgPlayer, x, y) {
     }
   });
 
-  this.x = x;
-  this.y = y;
-  this.Sprite_initialize(sheet, 'idle');
+  Game.Entity.call(this, sheet, 'idle');
 };
+Player.extend(Game.Entity);
 
-Player.prototype.tick = function(event) {
-};
-
-Game.Player = Player;
+Game.Entities.Player = Player;
 
 })(window.Game);

@@ -61,7 +61,9 @@ window.Game = {
     if (!event) {
       event = window.event
     }
-    this._screen.handleKeyDown(event);
+    if (this._screen) {
+     this._screen.handleKeyDown(event);
+    }
   },
   /**
    * This function is called every time a key is released. The event
@@ -73,7 +75,9 @@ window.Game = {
     if (!event) {
       event = window.event
     }
-    this._screen.handleKeyUp(event);
+    if (this._screen) {
+      this._screen.handleKeyUp(event);
+    }
   },
   /**
    * Switches the current game screen.
