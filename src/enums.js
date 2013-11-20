@@ -48,6 +48,20 @@ Game.Keymap = {
       // simply check the value
       return keyTest.value == keyCode;
     }
+  },
+  /**
+   * Thus determines the direction for a given key, or null if it is not
+   * a directional key.
+   * @param  {int} keyCode The key that was pressed. 
+   * @return {?Game.Direction} If the key is directional, returns the direction
+   *                              of the key else null.
+   */
+  getKeyDirection: function(keyCode) {
+    if (this.isKey(keyCode, this.LEFT)) return Game.Direction.LEFT;
+    if (this.isKey(keyCode, this.RIGHT)) return Game.Direction.RIGHT;
+    if (this.isKey(keyCode, this.UP)) return Game.Direction.UP;
+    if (this.isKey(keyCode, this.DOWN)) return Game.Direction.DOWN;
+    return false;
   }
 }
 

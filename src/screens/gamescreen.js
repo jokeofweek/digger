@@ -32,21 +32,10 @@ GameScreen.prototype.tick = function(event, stage) {
  * @override
  */
 GameScreen.prototype.handleKeyDown = function(event) {
-  // Check if player started moving or is moving in a different direction.
-  if (!this._player.isMoving() || !Game.Keymap.isKey(event.keyCode, Game.Direction.getDirectionKey(this._player.getDirection()))) {
-    if (Game.Keymap.isKey(event.keyCode, Game.Keymap.LEFT)) {
-      this._player.setDirection(Game.Direction.LEFT);
-      this._player.setMoving(true);
-    } else if (Game.Keymap.isKey(event.keyCode, Game.Keymap.RIGHT)) {
-      this._player.setDirection(Game.Direction.RIGHT);
-      this._player.setMoving(true);
-    }  else if (Game.Keymap.isKey(event.keyCode, Game.Keymap.UP)) {
-      this._player.setDirection(Game.Direction.UP);
-      this._player.setMoving(true);
-    }  else if (Game.Keymap.isKey(event.keyCode, Game.Keymap.DOWN)) {
-      this._player.setDirection(Game.Direction.DOWN);
-      this._player.setMoving(true);
-    } 
+  // Check if player wants to move.
+  var keyDirection = Game.Keymap.getKeyDirection(event.keyCode);
+  if (keyDirection) {
+    this._player.setMoveDirection(keyDirection);
   }
 };
 
@@ -54,9 +43,9 @@ GameScreen.prototype.handleKeyDown = function(event) {
  * @override
  */
 GameScreen.prototype.handleKeyUp = function(event) {
-  // If we let go of the key for the player's direction, quit moving
-  if (Game.Keymap.isKey(event.keyCode, Game.Direction.getDirectionKey(this._player.getDirection()))) {
-    this._player.setMoving(false);
+  // If we let go of active move key then stop moving after we reach destination.
+  if (Game.Keymap.getKeyDirection(event.keyCode) == this._player.getMoveDirection()) {
+    this._player.setMoveDirection(null);
   }
 };
 
