@@ -26,7 +26,7 @@ StartScreen.prototype.enter = function(stage) {
  * @override
  */
 StartScreen.prototype.handleKeyDown = function(event) {
-  if (Game.isKey(event.keyCode, Game.Keymap.RETURN)) {
+  if (Game.Keymap.isKey(event.keyCode, Game.Keymap.RETURN)) {
     Game.switchScreen(new Game.Screens.GameScreen());
   }
 };

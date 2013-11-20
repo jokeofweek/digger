@@ -95,25 +95,6 @@ window.Game = {
     if (this._screen) {
       this._screen.enter(this._stage);
     }
-  },
-  /**
-   * Checks whether a given key is pressed.
-   * @param {int} keyCode The keycode that was pressed.
-   * @param {Game.Keymap} keyTest The key to check.
-   */
-  isKey: function(keyCode, keyTest) {
-    // If there are multiple keys, need to iterate through.
-    if (keyTest.length) {
-      for (var i = keyTest.length - 1; i >= 0; i--) {
-        if (keyTest[i].value == keyCode) {
-          return true;
-        }
-      };
-      return false;
-    } else {
-      // simply check the value
-      return keyTest.value == keyCode;
-    }
   }
 };
 

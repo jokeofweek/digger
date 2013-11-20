@@ -1,14 +1,17 @@
 (function(Game) {
 
 function Player() {
-  var frameWidth = 62;
-  var frameHeight = 38;
+  var frameWidth = 64;
+  var frameHeight = 64;
   var sheet = new createjs.SpriteSheet({
     images: [Game.getLoader().getResult('truck')],
     frames: { width: frameWidth, height: frameHeight, regX: 0, regY: 0, count: 4},
     animations: {
       idle: {
-        frames: [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3],
+        frames: [0]
+      },
+      moving: {
+        frames: [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3]
       }
     }
   });
