@@ -12,6 +12,10 @@ GameScreen.extend(Game.Screen);
 GameScreen.prototype.enter = function(stage) {
   console.log('Entering game screen.');
 
+  // Create the map
+  this._map = new Game.Map(19, 19);
+  stage.addChild(this._map);
+
   // Create the player.
   this._player = new Game.Entities.Player();
   stage.addChild(this._player);

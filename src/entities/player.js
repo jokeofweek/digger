@@ -1,10 +1,10 @@
 (function(Game) {
 
 function Player() {
-  var frameWidth = 64;
-  var frameHeight = 64;
+  var frameWidth = 32;
+  var frameHeight = 32;
   var sheet = new createjs.SpriteSheet({
-    images: [Game.getLoader().getResult('truck')],
+    images: [Game.getLoader().getResult('truck_small')],
     frames: { width: frameWidth, height: frameHeight, regX: 0, regY: 0, count: 4},
     animations: {
       idle: {

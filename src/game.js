@@ -17,7 +17,9 @@ window.Game = {
     // Load the assets before starting the game.
     manifest = [
       {src: 'assets/salmon.png', id: 'salmon'},
-      {src: 'assets/truck.png', id: 'truck'}
+      {src: 'assets/truck.png', id: 'truck'},
+      {src: 'assets/truck_small.png', id: 'truck_small'},
+      {src: 'assets/tiles.png', id: 'tiles'}
     ];
     loader = new createjs.LoadQueue(false);
     loader.addEventListener('complete', this.reset.bind(this));
