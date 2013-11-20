@@ -1,6 +1,6 @@
 (function(Game) {
 
-function Player() {
+function Player(map) {
   var frameWidth = 32;
   var frameHeight = 32;
   var sheet = new createjs.SpriteSheet({
@@ -16,7 +16,7 @@ function Player() {
     }
   });
 
-  Game.Entity.call(this, sheet, 'idle');
+  Game.Entity.call(this, map, sheet, 'idle');
 };
 Player.extend(Game.Entity);
 

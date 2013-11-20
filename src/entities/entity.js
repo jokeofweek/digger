@@ -1,33 +1,33 @@
 (function(Game) {
 
-function Entity(sheet, startingAnimation) {
+function Entity(map, sheet, startingAnimation) {
   // Parent constructor
   createjs.Sprite.call(this, sheet, startingAnimation);
   if (!sheet._frameWidth || !sheet._frameHeight) {
   	throw new Error('Sprite sheet is missing frame width and height.');
   }
   // Set the offset to be half the frame width and height.
-  this.regX = this.regOffsetX = sheet._frameWidth / 2;
-  this.regY = this.regOffsetY = sheet._frameHeight / 2;
-  this.setDirection(Game.Direction.LEFT);
+  this.regX = this._regOffsetX = sheet._frameWidth / 2;
+  this.regY = this._regOffsetY = sheet._frameHeight / 2;
   this.x = this.regX;
   this.y = this.regY;
-  this.setMoveDirection(null);
+  this._map = map;
+  this.setFacingDirection(Game.Direction.LEFT);
+  this.setMovingDirection(null);
 
 }
 Entity.extend(createjs.Sprite);
 
-Entity.prototype.regOffsetX = 0;
-Entity.prototype.regOffsetY = 0;
-Entity.prototype.moveDirection = null;
-Entity.prototype.destination = null;
+Entity.prototype._regOffsetX = 0;
+Entity.prototype._regOffsetY = 0;
+Entity.prototype._movingDirection = null;
+Entity.prototype._destination = null;
 
 /**
  * Updates the direction of the entity.
  * @param {Game.Direction} direction The new direction.
  */
-Entity.prototype.setDirection = function(direction) {
-  this._direction = direction;
+Entity.prototype.setFacingDirection = function(direction) {
   // Set the scales.
   switch (direction) {
     case Game.Direction.LEFT:
@@ -59,46 +59,46 @@ Entity.prototype.getY = function() {
 	return Math.round((this.y - this.regY) / Game.Config.TILE_SIZE);
 };
 
-Entity.prototype.setMoveDirection = function(moveDirection) {
-  this.moveDirection = moveDirection;
+Entity.prototype.setMovingDirection = function(moveDirection) {
+  this._movingDirection = moveDirection;
 
   // If we aren't currently moving and requested a new move.
-  if (!this.destination && this.moveDirection) {
+  if (!this._destination && this._movingDirection) {
     this._startMoving();
   }
 };
 
-Entity.prototype.getMoveDirection = function() {
-  return this.moveDirection;
+Entity.prototype.getMovingDirection = function() {
+  return this._movingDirection;
 };
 
 Entity.prototype._startMoving = function() {
-  this.destination = getNextTile(this.getX(), this.getY(), this.getMoveDirection());
-  this.setDirection(this.getMoveDirection());
-  createjs.Tween.get(this).
-    to({
-      x: this.destination.x * Game.Config.TILE_SIZE + this.regOffsetX, 
-      y: this.destination.y * Game.Config.TILE_SIZE + this.regOffsetY
-    }, 300).
-    call(this._completeMove.bind(this));
+  var destination = getNextTile(this.getX(), this.getY(), this.getMovingDirection());
+  this.setFacingDirection(this.getMovingDirection());
+  // Only move if we actually can.
+  if (this._map.isWalkable(destination.x, destination.y)) {
+    this._destination = destination;
+    createjs.Tween.get(this).
+      to({
+        x: this._destination.x * Game.Config.TILE_SIZE + this._regOffsetX, 
+        y: this._destination.y * Game.Config.TILE_SIZE + this._regOffsetY
+      }, 300).
+      call(this._completeMove.bind(this));
+  }
 };
 
 Entity.prototype._completeMove = function() {
   // We've reached out destination!
-  this.destination = null;
+  this._destination = null;
   // If we have a move direction, move in that way!
-  if (this.getMoveDirection()) {
+  if (this.getMovingDirection()) {
     this._startMoving();
   }
 };
 
-/**
- * This method is called when the stage ticks.
- * @param  {?} event The tick event.
- */
 Entity.prototype.tick = function(event) {
-  
 };
+
 
 // Private helper functions
 function getNextTile(startX, startY, direction) {
