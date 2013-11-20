@@ -51,12 +51,12 @@ Entity.prototype.getDirection = function() {
 
 Entity.prototype.getX = function() {
 	// Remove regX
-	return (this.x - this.regX) / Game.Config.TILE_SIZE; 
+	return Math.round((this.x - this.regX) / Game.Config.TILE_SIZE); 
 };
 
 Entity.prototype.getY = function() {
 	// Remove regY
-	return (this.y - this.regY) / Game.Config.TILE_SIZE;
+	return Math.round((this.y - this.regY) / Game.Config.TILE_SIZE);
 };
 
 Entity.prototype.setMoveDirection = function(moveDirection) {
