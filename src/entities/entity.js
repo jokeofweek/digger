@@ -85,8 +85,11 @@ Entity.prototype.getMovingDirection = function() {
 Entity.prototype._startMoving = function() {
   var destination = getNextTile(this.getX(), this.getY(), this.getMovingDirection());
   this.setFacingDirection(this.getMovingDirection());
+  // If the tile is mineable, try to mine it.
+  if (this._map.isMineable(destination.x, destination.y)) {
+    this._map.updateTile(destination.x, destination.y, 0);
   // Only move if we actually can.
-  if (this._map.isWalkable(destination.x, destination.y)) {
+  } else  if (this._map.isWalkable(destination.x, destination.y)) {
     this._destination = destination;
     createjs.Tween.get(this).
       to({
