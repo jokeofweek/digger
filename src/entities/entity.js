@@ -24,8 +24,8 @@ Entity.prototype._movingDirection = null;
 Entity.prototype._destination = null;
 
 /**
- * Updates the direction of the entity.
- * @param {Game.Direction} direction The new direction.
+ * Updates the direction the entity is facing.
+ * @param {Game.Direction} direction The new direction to face.
  */
 Entity.prototype.setFacingDirection = function(direction) {
   // Set the scales.
@@ -45,20 +45,27 @@ Entity.prototype.setFacingDirection = function(direction) {
   }
 };
 
-Entity.prototype.getDirection = function() {
-  return this._direction;
-};
-
+/**
+ * @return {int} the X tile position on the map.
+ */
 Entity.prototype.getX = function() {
 	// Remove regX
 	return Math.round((this.x - this.regX) / Game.Config.TILE_SIZE); 
 };
 
+/*
+ * @return {int} the Y tile position on the map.
+ */
 Entity.prototype.getY = function() {
 	// Remove regY
 	return Math.round((this.y - this.regY) / Game.Config.TILE_SIZE);
 };
 
+/**
+ * This updates the direction that the entity wishes to move in.
+ * @param {Game.Direction?} moveDirection The direction to move in, or null if 
+ *                                        no move is desired.
+ */
 Entity.prototype.setMovingDirection = function(moveDirection) {
   this._movingDirection = moveDirection;
 
@@ -72,6 +79,9 @@ Entity.prototype.getMovingDirection = function() {
   return this._movingDirection;
 };
 
+/**
+ * Helper method which attempts to start a move.
+ */
 Entity.prototype._startMoving = function() {
   var destination = getNextTile(this.getX(), this.getY(), this.getMovingDirection());
   this.setFacingDirection(this.getMovingDirection());
@@ -87,6 +97,9 @@ Entity.prototype._startMoving = function() {
   }
 };
 
+/**
+ * Helper method which is called once a move is complete.
+ */
 Entity.prototype._completeMove = function() {
   // We've reached out destination!
   this._destination = null;
@@ -96,6 +109,11 @@ Entity.prototype._completeMove = function() {
   }
 };
 
+/**
+ * Interface method which other entities can override to specify an action
+ * to perform on game ticks.
+ * @param  {event} event The tick event.
+ */
 Entity.prototype.tick = function(event) {
 };
 

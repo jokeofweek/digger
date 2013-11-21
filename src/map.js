@@ -39,7 +39,18 @@ Map.prototype._setupTiles = function() {
   }
 };
 
+/**
+ * This function checks if a given tile can be walked on.
+ * @param  {int}  x The x position to test.
+ * @param  {int}  y The y position to test.
+ * @return {Boolean}   true if the tile is within bounds and walkable,
+ *                          else false.
+ */
 Map.prototype.isWalkable = function(x, y) {
+  // Make sure the position is within bounds.
+  if (x < 0 || x >= this._width || y < 0 || y >= this._height) {
+    return false;
+  }
   return this._tiles[y][x] == 0;
 };
 
