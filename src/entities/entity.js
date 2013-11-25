@@ -85,19 +85,7 @@ Entity.prototype.getMovingDirection = function() {
 Entity.prototype._startMoving = function() {
   var destination = getNextTile(this.getX(), this.getY(), this.getMovingDirection());
   this.setFacingDirection(this.getMovingDirection());
-  // If the tile is mineable, try to mine it.
-  if (this._map.isMineable(destination.x, destination.y)) {
-    this._map.updateTile(destination.x, destination.y, 0);
-  // Only move if we actually can.
-  } else  if (this._map.isWalkable(destination.x, destination.y)) {
-    this._destination = destination;
-    createjs.Tween.get(this).
-      to({
-        x: this._destination.x * Game.Config.TILE_SIZE + this._regOffsetX, 
-        y: this._destination.y * Game.Config.TILE_SIZE + this._regOffsetY
-      }, 300).
-      call(this._completeMove.bind(this));
-  }
+  this.enterTile(destination.x, destination.y);
 };
 
 /**
@@ -109,6 +97,26 @@ Entity.prototype._completeMove = function() {
   // If we have a move direction, move in that way!
   if (this.getMovingDirection()) {
     this._startMoving();
+  }
+};
+
+/**
+ * This is an overrideable function which should be called when an entity
+ * enters a tile. It allows for custom behavior on entering tile (eg. some 
+ * entities can mine while others can't). By default it provides simple
+ * movement.
+ * @param  {int} x The x position of the tile.
+ * @param  {int} y the y position of the tile.
+ */
+Entity.prototype.enterTile = function(x, y) {
+  if (this._map.isWalkable(x, y)) {
+    this._destination = {x: x, y: y};
+    createjs.Tween.get(this).
+      to({
+        x: x * Game.Config.TILE_SIZE + this._regOffsetX, 
+        y: y * Game.Config.TILE_SIZE + this._regOffsetY
+      }, 300).
+      call(this._completeMove.bind(this));
   }
 };
 

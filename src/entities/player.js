@@ -20,6 +20,19 @@ function Player(map) {
 };
 Player.extend(Game.Entity);
 
+/**
+ * @override
+ */
+Player.prototype.enterTile = function(x, y) {
+  // If the tile is mineable, try to mine it.
+  if (this._map.isMineable(x, y)) {
+    this._map.updateTile(x, y, 0);
+    // Call super method
+  } else {
+    Game.Entity.prototype.enterTile.call(this, x, y);
+  }
+};
+
 Game.Entities.Player = Player;
 
 })(window.Game);
