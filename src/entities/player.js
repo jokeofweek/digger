@@ -3,15 +3,19 @@
 function Player(map) {
   var frameWidth = 32;
   var frameHeight = 32;
+
   var sheet = new createjs.SpriteSheet({
     images: [Game.getLoader().getResult('truck_small')],
-    frames: { width: frameWidth, height: frameHeight, regX: 0, regY: 0, count: 4},
+    frames: { width: frameWidth, height: frameHeight, regX: 0, regY: 0, count: 8},
     animations: {
       idle: {
         frames: [0]
       },
       moving: {
         frames: [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3]
+      },
+      mining: {
+        frames: [4, 4, 5, 5, 6, 6, 7, 7]
       }
     }
   });
